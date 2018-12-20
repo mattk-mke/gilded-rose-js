@@ -15,24 +15,34 @@ items.push(new Item('Conjured Mana Cake', 3, 6));
 
 function update_quality() {
   for (var i = 0; i < items.length; i++) {
+    var q = 1
+    if (items[i].name.toLowerCase().includes("conjured")) {
+      var q = 2;
+    }
     if (items[i].name != 'Aged Brie' && items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
       if (items[i].quality > 0) {
         if (items[i].name != 'Sulfuras, Hand of Ragnaros') {
-          items[i].quality = items[i].quality - 1
+          if (items[i].quality - q < 0) {
+            q = 1
+          }
+          items[i].quality = items[i].quality - q
         }
       }
     } else {
       if (items[i].quality < 50) {
-        items[i].quality = items[i].quality + 1
+        if (items[i].quality + q > 50) {
+          q = 1
+        }
+        items[i].quality = items[i].quality + q
         if (items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
           if (items[i].sell_in < 11) {
             if (items[i].quality < 50) {
-              items[i].quality = items[i].quality + 1
+              items[i].quality = items[i].quality + q
             }
           }
           if (items[i].sell_in < 6) {
             if (items[i].quality < 50) {
-              items[i].quality = items[i].quality + 1
+              items[i].quality = items[i].quality + q
             }
           }
         }
@@ -46,7 +56,10 @@ function update_quality() {
         if (items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
           if (items[i].quality > 0) {
             if (items[i].name != 'Sulfuras, Hand of Ragnaros') {
-              items[i].quality = items[i].quality - 1
+              if (items[i].quality - q < 0) {
+                q = 1
+              }
+              items[i].quality = items[i].quality - q
             }
           }
         } else {
@@ -54,7 +67,10 @@ function update_quality() {
         }
       } else {
         if (items[i].quality < 50) {
-          items[i].quality = items[i].quality + 1
+          if (items[i].quality + q > 50) {
+            q = 1
+          }
+          items[i].quality = items[i].quality + q
         }
       }
     }
